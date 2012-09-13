@@ -1,0 +1,11 @@
+apply plugin: 'base'
+
+task prepareForStudents(type: Zip) {
+    description = 'Prepares a zip file with all the exercises but without the solutions.'
+
+    from('.') {
+        include 'exercises.md'
+        include { it.path.matches(/^\d\d.*/) }
+        //exclude { it.path.matches(".*/solution.*") }
+    }
+}

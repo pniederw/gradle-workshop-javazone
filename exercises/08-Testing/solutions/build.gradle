@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-collections:commons-collections:3.2'
+    testCompile 'junit:junit:4.10'
+}
+
+test {
+    afterTest { descr, result ->
+        if (result.resultType.toString() == 'FAILURE') {
+            def filepath = file("build/test-results/TEST-${descr.className}.xml").toString()
+            "open $filepath".execute()
+        }
+    }
+    testReport = false
+    forkEvery = 50
+    maxParallelForks = 2
+}
